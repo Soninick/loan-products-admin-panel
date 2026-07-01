@@ -14,34 +14,34 @@ class ProductsSeeder extends Seeder
 
         $products = [
             [
-                'name' => 'Starter Loan',
-                'description' => 'Basic loan product for younger salaried applicants.',
+                'name' => 'Personal Loan',
+                'description' => 'For salaried individuals with stable income and good credit history.',
                 'min_age' => 21,
-                'max_age' => 40,
-                'min_credit_score' => 600,
-                'allowed_employment_types' => ['Salaried', 'Self Employed'],
-                'allowed_salary_types' => ['Monthly'],
+                'max_age' => 58,
+                'min_credit_score' => 700,
+                'allowed_employment_types' => ['Salaried'],
+                'allowed_salary_types' => ['Cash', 'Cheque'],
+                'min_salary' => 25000,
+            ],
+            [
+                'name' => 'Business Loan',
+                'description' => 'Designed for self employed applicants with stronger repayment capacity.',
+                'min_age' => 25,
+                'max_age' => 55,
+                'min_credit_score' => 750,
+                'allowed_employment_types' => ['Self Employed'],
+                'allowed_salary_types' => ['Cheque'],
                 'min_salary' => 50000,
             ],
             [
-                'name' => 'Growth Loan',
-                'description' => 'Higher value loan product for stable applicants.',
-                'min_age' => 25,
+                'name' => 'Flexi Loan',
+                'description' => 'Flexible loan option for both salaried and self employed applicants.',
+                'min_age' => 23,
                 'max_age' => 55,
-                'min_credit_score' => 700,
-                'allowed_employment_types' => ['Salaried'],
-                'allowed_salary_types' => ['Monthly', 'Yearly'],
-                'min_salary' => 90000,
-            ],
-            [
-                'name' => 'Flex Loan',
-                'description' => 'Loan product for self employed applicants.',
-                'min_age' => 30,
-                'max_age' => 60,
                 'min_credit_score' => 650,
-                'allowed_employment_types' => ['Self Employed'],
-                'allowed_salary_types' => ['Yearly'],
-                'min_salary' => 80000,
+                'allowed_employment_types' => ['Salaried', 'Self Employed'],
+                'allowed_salary_types' => ['Cash', 'Cheque'],
+                'min_salary' => 30000,
             ],
         ];
 
@@ -50,8 +50,8 @@ class ProductsSeeder extends Seeder
                 ['name' => $attributes['name']],
                 $attributes
             );
-
-            $eligibilityEngineService->evaluateAllUsers();
         }
+
+        $eligibilityEngineService->evaluateAllUsers();
     }
 }
