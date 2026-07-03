@@ -58,7 +58,9 @@
   <ProductModal
     :show="showModal"
     :product="selectedProduct"
+    :error-message="modalError"
     @close="closeModal"
+    @clear-error="modalError = ''"
     @save="handleSave"
   />
 </template>
@@ -78,6 +80,7 @@ const errorMessage = ref('');
 const message = ref('');
 const showModal = ref(false);
 const selectedProduct = ref(null);
+const modalError = ref('');
 
 const isAdmin = computed(() => authState.user?.role?.name === 'Admin');
 
@@ -97,17 +100,34 @@ async function loadProducts() {
 
 function openCreateModal() {
   selectedProduct.value = null;
+  modalError.value = '';
   showModal.value = true;
 }
 
 function openEditModal(product) {
   selectedProduct.value = product;
+  modalError.value = '';
   showModal.value = true;
 }
 
 function closeModal() {
   showModal.value = false;
   selectedProduct.value = null;
+  modalError.value = '';
+}
+
+function getValidationMessage(error, fallbackMessage) {
+  const errors = error?.response?.data?.errors;
+
+  if (errors && typeof errors === 'object') {
+    const firstField = Object.keys(errors)[0];
+
+    if (firstField && Array.isArray(errors[firstField]) && errors[firstField].length > 0) {
+      return errors[firstField][0];
+    }
+  }
+
+  return error?.response?.data?.message || fallbackMessage;
 }
 
 async function handleSave(payload) {
@@ -122,8 +142,8 @@ async function handleSave(payload) {
 
     closeModal();
     await loadProducts();
-  } catch {
-    errorMessage.value = 'Unable to save product.';
+  } catch (error) {
+    modalError.value = getValidationMessage(error, 'Unable to save product.');
   }
 }
 

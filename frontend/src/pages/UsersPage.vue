@@ -52,7 +52,13 @@
     </div>
   </div>
 
-  <UserModal :show="showUserModal" @close="showUserModal = false" @save="handleCreateUser" />
+  <UserModal
+    :show="showUserModal"
+    :error-message="modalError"
+    @close="closeUserModal"
+    @clear-error="modalError = ''"
+    @save="handleCreateUser"
+  />
   <EligibleProductsModal
     :show="showEligibleProductsModal"
     :eligible-products="eligibleProducts"
@@ -77,6 +83,7 @@ const message = ref('');
 const showUserModal = ref(false);
 const showEligibleProductsModal = ref(false);
 const eligibleProducts = ref([]);
+const modalError = ref('');
 
 const isAdmin = computed(() => authState.user?.role?.name === 'Admin');
 
@@ -99,10 +106,27 @@ async function handleCreateUser(payload) {
     await createUserRequest(payload);
     message.value = 'User created successfully.';
     showUserModal.value = false;
+    modalError.value = '';
     await loadUsers();
-  } catch {
-    errorMessage.value = 'Unable to save user.';
+  } catch (error) {
+    const errors = error?.response?.data?.errors;
+
+    if (errors && typeof errors === 'object') {
+      const firstField = Object.keys(errors)[0];
+
+      if (firstField && Array.isArray(errors[firstField]) && errors[firstField].length > 0) {
+        modalError.value = errors[firstField][0];
+        return;
+      }
+    }
+
+    modalError.value = error?.response?.data?.message || 'Unable to save user.';
   }
+}
+
+function closeUserModal() {
+  showUserModal.value = false;
+  modalError.value = '';
 }
 
 async function viewEligibleProducts(user) {

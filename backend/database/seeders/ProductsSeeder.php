@@ -20,7 +20,7 @@ class ProductsSeeder extends Seeder
                 'max_age' => 58,
                 'min_credit_score' => 700,
                 'allowed_employment_types' => ['Salaried'],
-                'allowed_salary_types' => ['Cash', 'Cheque'],
+                'allowed_salary_types' => ['Monthly'],
                 'min_salary' => 25000,
             ],
             [
@@ -30,7 +30,7 @@ class ProductsSeeder extends Seeder
                 'max_age' => 55,
                 'min_credit_score' => 750,
                 'allowed_employment_types' => ['Self Employed'],
-                'allowed_salary_types' => ['Cheque'],
+                'allowed_salary_types' => ['Yearly'],
                 'min_salary' => 50000,
             ],
             [
@@ -40,7 +40,7 @@ class ProductsSeeder extends Seeder
                 'max_age' => 55,
                 'min_credit_score' => 650,
                 'allowed_employment_types' => ['Salaried', 'Self Employed'],
-                'allowed_salary_types' => ['Cash', 'Cheque'],
+                'allowed_salary_types' => ['Monthly', 'Yearly'],
                 'min_salary' => 30000,
             ],
         ];

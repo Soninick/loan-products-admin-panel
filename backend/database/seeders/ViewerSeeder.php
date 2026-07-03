@@ -21,7 +21,7 @@ class ViewerSeeder extends Seeder
                 'name' => 'Viewer User',
                 'password' => Hash::make('password'),
                 'dob' => '1998-08-15',
-                'credit_score' => 640,
+                'credit_score' => 660,
                 'employment_type' => 'Salaried',
                 'salary_type' => 'Monthly',
                 'salary' => 60000,

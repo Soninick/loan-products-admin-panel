@@ -21,7 +21,7 @@ class UsersSeeder extends Seeder
                 'name' => 'Young User',
                 'role_id' => $viewerRoleId,
                 'password' => Hash::make('password'),
-                'dob' => '2006-01-20',
+                'dob' => '2005-01-20',
                 'credit_score' => 720,
                 'employment_type' => 'Salaried',
                 'salary_type' => 'Monthly',
